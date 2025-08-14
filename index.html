@@ -405,10 +405,18 @@
         content.innerHTML = `<h2>${tab.charAt(0).toUpperCase() + tab.slice(1)}</h2><p>Content for "${tab}" tab goes here.</p>`;
       }
     }
-
-    // Load home tab on page load
     loadTab('home');
   </script>
+  <div id="footer"></div>
+<script>
+  fetch('includes/footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    })
+    .catch(err => console.error('Error loading footer:', err));
+</script>
 </body>
 </html>
+
 
