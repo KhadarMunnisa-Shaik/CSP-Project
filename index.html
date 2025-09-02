@@ -1,0 +1,685 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Water Awareness Project</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(#0e70a5e7);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;      
+      justify-content: center;  
+      text-align: center;      
+      background-color: #004466;
+      color: white;
+      padding: 1rem;
+    }
+
+    .top-bar img {
+      height: 120px;
+      width: 150px;
+      margin-right: 1rem;  
+    }
+
+    .top-bar .info {
+      max-width: 800px;    
+      line-height: 1.5;
+    }
+
+    .header {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.6rem;
+      font-weight: bold;
+      background-color: #007399;
+      color: white;
+    }
+
+    .buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-bottom: 2px solid #ddd;
+}
+
+.buttons button {
+  position: relative;
+  background: #004466;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: White;
+  cursor: pointer;
+  padding: 10px 16px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.buttons button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+  background: rgb(74, 167, 203);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.buttons button:hover {
+  transform: translateY(-3px);
+  color: #007399;
+}
+
+.buttons button:hover::after {
+  width: 100%;
+}
+
+.buttons button.active {
+  color: #ff6600;
+}
+
+.buttons button.active::after {
+  width: 100%;
+  background: #ff6600;
+}
+
+
+    #content {
+      max-width: 900px;
+      margin: 1rem auto;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem ;
+      border-radius: 10px;
+      color: #000;
+    }
+
+    a {
+      color: blue;
+    }
+
+    a:hover {
+      color: darkblue;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #004466;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007399;
+      color: white;
+    }
+
+    .table-controls {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .nav-btn {
+      margin: 0 0.5rem;
+      padding: 8px 15px;
+      background-color: #004466;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      background-color: #006699;
+    }
+
+    .team-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .member-card {
+      position: relative;
+      background-color: #004466;
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      width: 180px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .member-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .member-initials {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 10px;
+      background-color: #00acc1;
+      color: white;
+      font-size: 1.4rem;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    }
+
+    .member-card:hover .member-initials {
+      background-color: #007399;
+    }
+
+    #content .abstract-paragraph {
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      gap: 20px;
+    }
+
+    .headings {
+      width: 25%;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      padding: 10px;
+    }
+
+    .headings div {
+      padding: 12px;
+      margin: 5px 0;
+      background: #f0f0f0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .headings div:hover {
+      background: #d9eaff;
+    }
+
+    .headings div.active {
+      background: #3471b6;
+      color: white;
+    }
+
+    .content-report {
+      width: 70%;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      padding: 20px;
+      min-height: 200px;
+    }
+
+    .content-section {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+    <div class="top-bar">
+       <img src="https://yamunika302.github.io/csp-1/logo.jpg" alt="College Logo" />
+       <div class="info">
+        <strong>GEETHANJALI INSTITUTE OF SCIENCE AND TECHNOLOGY</strong><br/>
+         A unit of USHODAYA EDUCATIONAL SOCIETY<br/>
+         Approved by AICTE, New Delhi & Affiliated to JNTUA, Ananthapuram<br/>
+         NAAC 'A' Grade | ISO 9001:2015 | Recognized under Sec. 2(f) & 12(B) of UGC Act, 1956<br/>
+         3rd Mile, Bombay Highway, Gangavaram(V), Kovur(M), SPSR Nellore(Dt) – 524137
+        </div>
+    </div>
+  <div class="header">Community Service Project - Water Awareness</div>
+
+  <!-- Buttons with icons, horizontal layout -->
+  <div class="buttons">
+    <button onclick="loadTab('home')">🏠 Home</button>
+    <button onclick="loadTab('team')">👥 Team Members</button>
+    <button onclick="loadTab('introduction')">📖 Introduction</button>
+    <button onclick="loadTab('abstract')">📝 Abstract</button>
+    <button onclick="loadTab('survey')">📊 Survey Data</button>
+    <button onclick="loadTab('activity')">🗓 Activity Log</button>
+    <button onclick="loadTab('photos')">📸 Survey Photos</button>
+    <button onclick="loadTab('conclusion')">✅ Conclusion</button>
+    <button onclick="loadTab('contact us')">✉️ Contact Us</button>
+  </div>
+
+  <div id="content"></div>
+
+    <script>
+    const activityData = [
+      [["Day 1", "Visited Ranganayakulapeta and selected survey area"], ["Day 2", "Conducted door-to-door interactions"], ["Day 3", "Explained health risks from water pollution"], ["Day 4", "Distributed feedback forms and collected responses"], ["Day 5", "Awareness on clean water practices and sanitation"], ["Day 6", "Follow-up interactions with residents for feedback"], ["Day 7", "Compiled data and submitted report to Sachivalayam"]],
+      [["Day 1", "Visited Santhapeta, surveyed drainage issues"], ["Day 2", "Educated families on water safety"], ["Day 3", "Explained impact of waste disposal on health"], ["Day 4", "Distributed feedback forms"], ["Day 5", "Collected and analyzed responses"], ["Day 6", "Submitted findings to Sachivalayam"], ["Day 7", "Planned next area's visit"]],
+      [["Day 1", "Survey in Mulapeta"], ["Day 2", "Door-to-door awareness on water waste"], ["Day 3", "Observed sewer overflows and stagnant water"], ["Day 4", "Educated residents on reporting issues"], ["Day 5", "Feedback form collection"], ["Day 6", "Data compilation"], ["Day 7", "Reported issues to officials"]],
+      [["Day 1", "Revisited Ranganayakulapeta for black water issue"], ["Day 2", "Documented visual samples of water"], ["Day 3", "Educated about waterborne diseases"], ["Day 4", "Awareness on water filtration and hygiene"], ["Day 5", "Feedback collection"], ["Day 6", "Report drafted"], ["Day 7", "Submitted to Sachivalayam"]],
+      [["Day 1", "Prepared pH paper test materials for Santhapeta"], ["Day 2", "Tested household water (yellowish green)"], ["Day 3", "Explained results to families"], ["Day 4", "Noted health complaints (stomach pain, tiredness)"], ["Day 5", "Shared simple filtration tips"], ["Day 6", "Revisited for confirmation"], ["Day 7", "Submitted report"]],
+      [["Day 1", "Prepared for pH testing in Mulapeta"], ["Day 2", "Conducted tests (pale green/yellow)"], ["Day 3", "Noted visible water contamination"], ["Day 4", "Educated on boiling and filtering"], ["Day 5", "Recorded resident suggestions"], ["Day 6", "Finalized report with visuals"], ["Day 7", "Reported to officials"]]
+    ];
+
+    let currentWeek = 0;
+
+    function generateTable(index) {
+      const rows = activityData[index].map(([day, activity]) => `<tr><td>${day}</td><td>${activity}</td></tr>`).join('');
+      const prevBtn = index > 0 ? `<button class='nav-btn' onclick='navigateWeek(${index - 1})'>Previous</button>` : '';
+      const nextBtn = index < activityData.length - 1 ? `<button class='nav-btn' onclick='navigateWeek(${index + 1})'>Next</button>` : '';
+      return `<table><tr><th>Day</th><th>Activity</th></tr>${rows}</table><div class='table-controls'>${prevBtn}${nextBtn}</div>`;
+    }
+
+    function navigateWeek(index) {
+      currentWeek = index;
+      const content = `<h2>Activity Log – Week ${index + 1}</h2>` + generateTable(index);
+      updateContent(content);
+    }
+
+    function updateContent(html) {
+      document.getElementById("content").innerHTML = html;
+    }
+
+    function loadTab(tab) {
+      const content = document.getElementById("content");
+      if (tab === "home") {
+        content.innerHTML = `
+          <img src="https://www.mymathews.com/media/institute_banner/GIST_Banner.JPG" alt="Institute Banner" style="width:100%; max-width:900px; border-radius:10px; margin-bottom: 1rem;" />
+          <h2>Water Awareness Project</h2>
+          <p>Welcome to our Water Awareness Project.</p>
+          <p style="text-align: justify;">Clean water is essential to life. Our mission is to spread awareness about the importance of water conservation and ensure access to clean water for all.</p>
+          <p style="text-align: justify;">We believe that a brighter future starts with small steps: saving water, reducing pollution, and educating communities about sustainable practices. Through this platform, we aim to highlight challenges related to water scarcity and provide resources and solutions for a cleaner tomorrow.</p>
+          <p>Together, let's make every drop count!</p>
+        `;
+      } else if (tab === "introduction") {
+        content.innerHTML = `
+          <h2>Introduction</h2>
+          <p style="text-align: justify;">We are students of Geethanjali Institute of Science and Technology, from the Computer Science and Engineering (CSE) department.</p>
+          <p style="text-align: justify;">As part of our Community Service Project (CSP), we chose Water Pollution Awareness as our domain. Our mission is to highlight the pressing issues related to water pollution and create awareness about its harmful effects on health and the environment.</p>
+          <p style="text-align: justify;">Over several weeks, we conducted detailed surveys in different localities, spoke to residents, documented water-related issues, and educated communities on clean water practices. We also performed pH tests to assess the quality of water in affected areas, collected feedback, and submitted detailed reports to the local Sachivalayam.</p>
+          <p style="text-align: justify;">This project gave us an opportunity to work closely with the community and understand real-world problems while contributing meaningfully to a cleaner, healthier society.</p>
+          <p style="text-align: justify;">We would like to express our heartfelt gratitude to our beloved guide <strong>Dr. Sindhuri Nasina, Associate Professor, Ph.D</strong>, who supported us throughout this journey. Her valuable insights, continuous encouragement, and mentorship played a crucial role in the successful completion of our project.</p>
+          <p><strong>Thank you!</strong></p>
+        `;
+      } else if (tab === "abstract") {
+        content.innerHTML = `
+          <h2>Abstract</h2>
+          <p class="abstract-paragraph">Water pollution is a growing problem in areas like Ranganayakula Peta, Santhapeta and Mulapeta. In these localities, water sources such as canals, drains, and small ponds are getting polluted due to improper waste disposal, drainage leakage, and dumping of garbage. People living in these areas often use this water for daily needs, and polluted water is causing health problems like skin infections and stomach issues. The main causes of pollution here are household waste, plastic dumping, and sewage water mixing into fresh water sources. In this project, we studied the local water pollution problems and interacted with residents to understand their difficulties. Our goal is to spread awareness about water cleanliness and suggest solutions like proper drainage systems, avoiding plastic usage, and keeping surroundings clean. By taking small steps together, we can protect water and health in our communities.</p>
+        `;
+      } else if (tab === "survey") {
+  content.innerHTML = `
+    <h1 style="text-align:center;">Survey  Report</h1>
+    <div class="container">
+      <!-- Sidebar Headings -->
+      <div class="headings">
+        <div data-target="intro" class="active">Introduction</div>
+        <div data-target="causes">Causes</div>
+        <div data-target="effects">Effects</div>
+        <div data-target="safety">Safety Measures</div>
+        <div data-target="precautions">Precautions</div>
+        <div data-target="observed">What We Observed</div>
+        <div data-target="actions">Actions We Took</div>
+        <div data-target="residents">Resident's Reactions & Participation</div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-report">
+        <div id="intro" class="content-section active">
+          <h2>Introduction</h2>
+          <p style="text-align: justify;">Water pollution is the contamination of water bodies like rivers, lakes, oceans, and groundwater due to harmful substances. It occurs when pollutants are discharged directly or indirectly into water without proper treatment. This pollution affects not only aquatic life but also human health and ecosystems. Industrial waste, sewage, and plastic are some common contributors. Clean water is essential for drinking, agriculture, and hygiene, making its protection vital. If not controlled, water pollution can lead to severe environmental and health crises.</p>
+        </div>
+
+        <div id="causes" class="content-section">
+          <h2>Causes</h2>
+          <ul>
+            <li>Industrial waste dumped into rivers and lakes.</li>
+            <li>Untreated sewage and wastewater from households.</li>
+            <li>Agricultural runoff containing pesticides and fertilizers.</li>
+            <li>Plastic and solid waste littering water bodies.</li>
+            <li> Oil spills from ships and offshore activities.</li>
+          </ul>   
+        </div>
+
+        <div id="effects" class="content-section">
+          <h2>Effects</h2>
+          <ul>
+            <li>Death of aquatic plants and animals.</li>
+            <li>Spread of waterborne diseases like cholera and dysentery.</li>
+            <li>Contamination of drinking water sources.</li>
+            <li>Disruption of food chains and ecosystems.</li>
+            <li>Economic loss in fishing and tourism industries.</li>
+          </ul>
+        </div>
+
+        <div id="safety" class="content-section">
+          <h2>Safety Measures</h2>
+            <ul>
+            <li>Treat industrial waste before discharge.</li>
+            <li>Build proper sewage treatment plants.</li>
+            <li>Use eco-friendly agricultural practices.</li>
+            <li>Promote waste segregation and recycling.</li>
+            <li>Strict laws and penalties against polluters.</li>
+          </ul>
+        </div>
+
+        <div id="precautions" class="content-section">
+          <h2>Precautions</h2>
+            <ul>
+            <li>Avoid dumping waste into water sources.</li>
+            <li>Use natural or organic fertilizers at home.</li>
+            <li>Dispose of oil, chemicals, and medicines properly.</li>
+            <li>Reduce use of plastic and single-use items.</li>
+            <li>Participate in local water clean-up drives.</li>
+          </ul>
+        </div>
+
+        <div id="observed" class="content-section">
+          <h2>What We Observed</h2>
+          <ul>
+            <li>Selected Water Pollution Awareness as our community service project.</li>
+            <li>Visited various localities over 6 weeks to conduct a detailed survey.</li>
+            <li>Observed areas with visible water pollution (e.g., stagnant water, open drains, garbage near water sources).</li>
+            <li>Noted specific problems like:
+              <ol>
+                <li>Broken water supply pipes.</li>
+                <li>Open drainage systems.</li>
+                <li>Garbage dump near water sources.</li>
+                <li>Stagnant water causing mosquito and fly breeding.</li>
+                <li>Overflowing sewage in some areas.</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+
+        <div id="actions" class="content-section">
+          <h2>Actions We Took</h2>
+          <ul>
+           <li>sed pH paper strips to test drinking water quality in the localities.</li>
+            <li>Found issues like:
+              <ol>
+                <li>Foul-smelling drinking water.</li>
+                <li>Water appearing black or muddy.</li>
+                <li>Low pH levels indicating unsafe drinking water.</li>
+              </ol>
+            </li>
+            <li>During these weeks, we explained the causes, effects, safety measures, and precautions related to water pollution.</li>
+            <li>In the second 3-week phase, we revisited the same localities to check for changes and monitor improvements.</li>
+            <li>Educated residents about the importance of clean drinking water and basic hygiene practices.</li>
+            <li>Prepared a list of issues and shared it with Sachivalayam (village/ward secretariat) authorities.</li>
+            <li>Presented our findings and suggestions for better water and sanitation management.</li>
+          </ul>
+        </div>
+
+        <div id="residents" class="content-section">
+          <h2>Resident's Reactions & Participation</h2>
+          <ul>
+           <li>Residents welcomed us warmly and cooperated throughout the survey.</li>
+           <li>Many shared their concerns and ongoing water-related problems.</li>
+           <li>Helped us identify specific pollution spots and problem areas in their locality.</li>
+           <li>Actively participated in discussions and awareness sessions.</li>
+           <li>Showed interest in learning about safety precautions and health impacts.</li>
+           <li>Sachivalayam heads listened to our presentation and acknowledged the issues.</li>
+          <li>They responded positively and promised to take necessary action to fix:
+            <ol>
+                <li>Broken water pipelines.</li>
+                <li>Open drainages.</li>
+                <li>Garbage mismanagement.</li>
+                <li>Poor drinking water supply conditions.</li>
+            </ol>
+          </li>
+          <li>Some local changes were noticed in the second visit, showing that steps were being taken.</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  `;
+
+  setTimeout(() => {
+    const headings = document.querySelectorAll('.headings div');
+    const sections = document.querySelectorAll('.content-section');
+    headings.forEach(heading => {
+      heading.addEventListener('mouseenter', () => {
+        headings.forEach(h => h.classList.remove('active'));
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(heading.dataset.target).classList.add("active");
+        heading.classList.add("active");
+      });
+    });
+  }, 100);
+} else if (tab === "conclusion") {
+        content.innerHTML = `
+          <h2 style="text-align: center;color:#007399;">Conclusion</h2>
+    <p style="text-align: justify;">
+      Over six weeks of dedicated fieldwork, our community service project revealed the serious challenges people face due to water pollution in areas like Ranganayakulapeta, Santhapeta, and Mulapeta. From open drainage and waste dumping to the supply of discolored and chemically imbalanced water, the risks to public health were clear. However, what stood out most was the willingness of the community to listen, learn, and change.
+    </p>
+
+    <p style="text-align: justify;">
+      Our team not only identified key issues but also implemented awareness campaigns, conducted pH testing, promoted safe water practices, and submitted detailed feedback to local authorities. The cooperation we received from residents and the positive response from officials affirmed the impact of our efforts.
+    </p>
+
+    <p style="text-align: justify;">
+      This project taught us the value of communication, the importance of proactive environmental responsibility, and we are sincerely grateful for the cooperation of the local residents and the support of the Sachivalayam officials. Their openness and responsiveness enabled us to not only raise awareness but also initiate meaningful change. It was an honor to contribute to a cause that directly impacts public health and wellbeing.
+    </p>
+        `;
+      } else if (tab === "activity") {
+        navigateWeek(0);
+      } else if (tab === "contact us") {
+    content.innerHTML = `
+    <div class="form-wrapper">
+      <div class="form-header">
+        <h1>Water Concern Report</h1>
+        <p>Your responses will help us report the problems to the appropriate local authorities and raise awareness.</p>
+      </div>
+
+      <div class="form-container">
+        <form action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST" target="hidden_iframe" onsubmit="handleFormSubmit(event)">
+         
+          <label for="name">Name</label>
+          <input type="text" name="entry.1234567890" id="name" required placeholder="Your Name">
+
+          <label for="email">Email</label>
+          <input type="email" name="entry.0987654321" id="email" required placeholder="yourname@example.com">
+
+          <label for="feedback">Your Message</label>
+          <textarea name="entry.1122334455" id="feedback" required placeholder="Write down your problems/questions/anything you want to share" rows="6"></textarea>
+
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <style>
+      .form-wrapper {
+        max-width: 600px;
+        margin: 40px auto;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        font-family: 'Google Sans', Arial, sans-serif;
+        overflow: hidden;
+        background-color: #f9f9f9;
+      }
+      .form-header {
+        background-color: #007399;
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+      }
+      .form-header h1 {
+        margin: 0;
+        font-size: 30px;
+      }
+      .form-header p {
+        margin-top: 10px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .form-container {
+        padding: 30px 20px;
+        background-color: #fff;
+      }
+      .form-container label {
+        display: block;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      .form-container input[type="text"],
+      .form-container input[type="email"],
+      .form-container textarea {
+        width: 95%;
+        padding: 12px;
+        margin-top: 8px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: border 0.3s, box-shadow 0.3s;
+      }
+      .form-container input[type="text"]:focus,
+      .form-container input[type="email"]:focus,
+      .form-container textarea:focus {
+        border-color: #007399;
+        box-shadow: 0 0 5px rgba(0,115,153,0.4);
+        outline: none;
+      }
+      .form-container input[type="submit"] {
+        background-color: #007399;
+        color: white;
+        border: none;
+        margin-top: 25px;
+        padding: 12px;
+        width: 100%;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .form-container input[type="submit"]:hover {
+        background-color: #005f73;
+      }
+
+      @media (max-width: 640px) {
+        .form-wrapper {
+          margin: 20px;
+        }
+        .form-header {
+          padding: 30px 15px;
+        }
+        .form-container {
+          padding: 20px 15px;
+        }
+      }
+    </style>
+    `;
+} else if (tab === "photos") {
+        content.innerHTML = `
+          <h2 style="font-family: Arial, sans-serif; color: #333; margin-bottom: 20px;">Survey Photos</h2>
+          <div class="image-grid">
+            <img src="Images/image1.jpg" height="400px" width="400px" alt="Image 1" />
+            <img src="Images/image2.jpg" height="400px" width="400px" alt="Image 2" />
+            <img src="Images/image3.jpg" height="400px" width="400px"  alt="Image 3" />
+            <img src="Images/image4.jpg" height="430px" width="400px" alt="Image 4" />
+            <img src="Images/image5.jpg" height="400px" width="400px" alt="Image 5" />
+            <img src="Images/image6.jpg" height="450px" width="400px" alt="Image 6" />
+            <img src="Images/image7.jpg" height="400px" width="400px" alt="Image 7" />
+            <img src="Images/image8.jpg" height="400px" width="400px" alt="Image 8" />
+            <img src="Images/image9.jpg" height="400px" width="400px" alt="Image 9" />
+            <img src="Images/image10.jpg" height="400px" width="400px" alt="Image 10" />
+            <img src="Images/image11.jpg" height="400px" width="400px" alt="Image 11" />
+            <img src="Images/image12.jpg" height="400px" width="400px" alt="Image 12" />
+          </div>
+
+          <style>
+            .image-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 20px;
+            }
+            .image-grid img {
+              width: 100%;
+              max-width: 400px;
+              height: auto;
+              border-radius: 10px;
+              box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+              cursor: pointer;
+            }
+            .image-grid img:hover {
+              transform: scale(1.05);
+              box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            }
+          </style>
+        `;
+      } else if (tab === "team") {
+        content.innerHTML = `
+          <h2>Team Members</h2>
+          <div class="team-grid">
+            <div class="member-card">
+              <div class="member-initials">SKM</div>
+              <strong>Sk. Khadar Munnisa</strong><br>2nd Year, CSE
+            </div>
+            <div class="member-card">
+              <div class="member-initials">SM</div>
+              <strong>Sk. Muskhan</strong><br>2nd Year, CSE
+            </div>
+            <div class="member-card">
+              <div class="member-initials">SS</div>
+              <strong>Sd. Sophiya</strong><br>2nd Year, CSE
+            </div>
+            <div class="member-card">
+              <div class="member-initials">TM</div>
+              <strong>T. Meghana</strong><br>2nd Year, CSE
+            </div>
+          </div>
+        `;
+      } else {
+        content.innerHTML = `<h2>${tab.charAt(0).toUpperCase() + tab.slice(1)}</h2><p>Content for "${tab}" tab goes here.</p>`;
+      }
+    }
+    loadTab('home');
+  </script>
+  <div id="footer"></div>
+ <footer style="text-align:center; padding: 1rem; font-size: 0.9rem; background:#004466; color:white;">
+  &copy; <span id="year"></span> Water Awareness Project &nbsp;|&nbsp;
+  GEETHANJALI INSTITUTE OF SCIENCE AND TECHNOLOGY.<br>
+  3rd Mile, Bombay Highway, Gangavaram(V), Kovur(M), SPSR Nellore(Dt), 524137<br>
+  All rights reserved.
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</footer>
+</body>
+</html>
